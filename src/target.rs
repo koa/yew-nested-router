@@ -4,6 +4,7 @@ use std::borrow::Cow;
 use std::fmt::Debug;
 use url::form_urlencoded::Serializer;
 use url::Url;
+use urlencoding::decode;
 use yew::Callback;
 
 /// A target for used by a router.
@@ -78,8 +79,11 @@ pub trait Target: Clone + Debug + PartialEq + 'static {
             .into_iter()
             .flatten()
             .skip(base_count)
+            .map(decode)
+            .filter_map(Result::ok)
             .collect::<Box<[_]>>();
         let pairs = full_url.query_pairs().into_iter().collect::<Box<[_]>>();
+        let internal_path = internal_path.iter().map(Cow::as_ref).collect::<Box<[_]>>();
         Self::parse_path(&internal_path, &pairs)
     }
 }
