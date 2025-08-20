@@ -236,21 +236,15 @@ pub mod parameter_value {
         }
     }
 
-    impl<V: SimpleParameterValue> ParameterValue for Option<V> {
+    impl<V: ParameterValue> ParameterValue for Option<V> {
         fn extract_from_params(params: &[(Cow<str>, Cow<str>)], name: &str) -> Option<Self> {
-            Some(
-                params
-                    .iter()
-                    .filter(|(k, _)| k.as_ref() == name)
-                    .filter_map(|(_, v)| V::from_parameter_value(v.as_ref()))
-                    .next(),
-            )
+            Some(V::extract_from_params(params, name))
         }
 
         fn to_parameter_values(&self) -> Box<[Cow<str>]> {
             match self {
                 None => Box::new([]),
-                Some(value) => Box::new([value.to_parameter_value()]),
+                Some(value) => value.to_parameter_values(),
             }
         }
     }
