@@ -19,7 +19,7 @@ jobs:
         toolchain:
           - stable
           # minimum version
-          - "1.73"
+          - "1.82"
 
     steps:
       - uses: actions/checkout@v3
