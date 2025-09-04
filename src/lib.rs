@@ -251,6 +251,7 @@ pub use router::Router;
 pub use scope::Scope;
 pub use switch::Switch;
 pub use yew_nested_router_macros::Target;
+pub use yew_nested_router_macros::TargetParamSet;
 
 /// Common includes.
 pub mod prelude {
@@ -261,4 +262,5 @@ pub mod prelude {
     pub use super::target::*;
 
     pub use yew_nested_router_macros::Target;
+    pub use yew_nested_router_macros::TargetParamSet;
 }

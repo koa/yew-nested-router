@@ -87,6 +87,10 @@ pub trait Target: Clone + Debug + PartialEq + 'static {
         Self::parse_path(&internal_path, &pairs)
     }
 }
+pub trait TargetParamSet: Sized + Default {
+    fn render_params_into<'a>(&'a self, params: &mut Vec<(Cow<'a, str>, Cow<'a, str>)>);
+    fn parse_params(params: &[(Cow<str>, Cow<str>)]) -> Self;
+}
 
 /// Maps a `P`arent target onto a `C`hild target and vice versa.
 #[derive(Debug, PartialEq)]
